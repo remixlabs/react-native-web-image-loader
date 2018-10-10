@@ -16,10 +16,10 @@ module.exports = async function( content: Buffer ) {
     const callback = this.async();
     if( this.cacheable ) this.cacheable()
 
-    const query = loaderUtils.parseQuery( this.query )
-    const wrapper = createImageWrapper( loaderUtils.stringifyRequest( this, query.imageClassPath || DEFAULT_IMAGE_CLASS_PATH ) )
-    const nameFormat = query.name || DEFAULT_IMAGE_NAME_FORMAT
-    const scalings = query.scalings || DEFAULT_SCALINGS
+    const options = loaderUtils.getOptions( this )
+    const wrapper = createImageWrapper( loaderUtils.stringifyRequest( this, options.imageClassPath || DEFAULT_IMAGE_CLASS_PATH ) )
+    const nameFormat = options.name || DEFAULT_IMAGE_NAME_FORMAT
+    const scalings = options.scalings || DEFAULT_SCALINGS
     const size = ImageSizeResolver( this.resourcePath )
     const url = loaderUtils.interpolateName( this, nameFormat, {
         context: this.context,
